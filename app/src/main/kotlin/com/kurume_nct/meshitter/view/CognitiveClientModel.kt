@@ -13,14 +13,13 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.LinearLayout
 import org.jetbrains.anko.*
 
 
 /**
- * Created by hanah on 7/25/2017.
- */
+* Created by hanah on 7/25/2017.
+*/
 class CognitiveClientModel {
     val gson = GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -35,26 +34,29 @@ class CognitiveClientModel {
 
 class CognitiveClientModelView{
     lateinit var responce : List<String>
+    var contain : Boolean = false
     init{
         CognitiveClientModel().run {
             cognitiveClient.search((R.drawable.bird as BitmapDrawable).bitmap)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        it.run { description.let { responce.map {  } } }
+                        it.run { description.let { responce.map { it.compareTo("food") } } }
                         Log.d(responce[0],"a!")
                     },{
                         Log.d("error" , "a!")
                     })
         }
-
+        if(responce.isNotEmpty()){
+            contain = true
+        }
     }
 }
 
 class CognitiveClientView : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-
+        CognitiveClientViewUI().setContentView(this)
     }
 }
 class CognitiveClientViewUI : AnkoComponent<CognitiveClientView>{
@@ -63,7 +65,12 @@ class CognitiveClientViewUI : AnkoComponent<CognitiveClientView>{
             orientation = LinearLayout.VERTICAL
             button("search Photo"){
                 onClick {
-
+                    doAsync {
+                        val contain = CognitiveClientModelView().contain
+                        uiThread {
+                            toast(contain.toString())
+                        }
+                    }
                 }
             }
         }
