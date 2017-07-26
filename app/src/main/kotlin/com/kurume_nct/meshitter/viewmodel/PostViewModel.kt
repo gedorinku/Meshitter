@@ -22,6 +22,7 @@ import java.io.File
 class PostViewModel(private val callback: Callback, private val context: Context) : BaseObservable() {
 
     val REQUEST_CODE = 334
+    var isMeshiTerro = false
 
     @Bindable
     var tweetBody: String = ""
@@ -63,7 +64,20 @@ class PostViewModel(private val callback: Callback, private val context: Context
         val uri = data?.data ?: return
         imageUris.add(uri)
 
-        println(imageUris.joinToString())
+        if (!isMeshiTerro) {
+            isMeshiTerro = true
+            addMeshiTerroTargets()
+        }
+    }
+
+    private fun addMeshiTerroTargets() {
+        TwitterUtil.nextMeshiTerroTargetsScreenNames()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    targets ->
+                    tweetBody = targets.joinToString(separator = " @", prefix = "@")
+                }
     }
 
     interface Callback {
