@@ -39,7 +39,7 @@ class CognitiveClientView : AppCompatActivity(){
         super.onCreate(savedInstanceState, persistentState)
         CognitiveClientViewUI().setContentView(this)
     }
-    fun onSearch() : Boolean{
+    fun onSearch() : Boolean {
         val r : Resources = resources
         val bmp : Bitmap = BitmapFactory.decodeResource(r,R.drawable.bird)
         var contain : Boolean = false
@@ -76,5 +76,4 @@ class CognitiveClientViewUI : AnkoComponent<CognitiveClientView>{
             }
         }
     }
-
 }
