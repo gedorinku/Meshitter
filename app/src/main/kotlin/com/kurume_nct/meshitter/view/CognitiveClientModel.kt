@@ -1,6 +1,8 @@
 package com.kurume_nct.meshitter.view
 
+import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
@@ -10,16 +12,12 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.LinearLayout
-import okhttp3.MediaType
 import org.jetbrains.anko.*
-import okhttp3.RequestBody
-import java.io.File
-import java.util.function.BinaryOperator
+
 /**
 * Created by hanah on 7/25/2017.
 */
@@ -31,33 +29,32 @@ class CognitiveClientModel {
             .baseUrl("https://westus.api.cognitive.microsoft.com/vision/v1.0/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .build()!!
+            .build()
     val cognitiveClient = retrofit.create(CognitiveClient::class.java)!!
 }
 
-class CognitiveClientModelView{
-    lateinit var responce : List<String> //怖いnullPointaExeption待ったなし。
-    fun onSearch() : Boolean{
-        val partFile : File = R.drawable.bird as File //絶対怪しい
-        val fbody = RequestBody.create(MediaType.parse("analysisResult"), partFile)
-        CognitiveClientModel().run {
-            cognitiveClient.search("Description","apikey",fbody)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        it.run { description.let { responce.map { it.compareTo("food") } } }
-                    },{
-                        Log.d("Tag" , "error")
-                    })
-        }
-        return responce.isNotEmpty()
-    }
-}
 
 class CognitiveClientView : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         CognitiveClientViewUI().setContentView(this)
+    }
+    fun onSearch() : Boolean{
+        val resource : Resources = resources
+        val bmp : Bitmap = BitmapFactory.decodeResource(resource,R.drawable.bird)
+        var contain : Boolean = false
+        CognitiveClientModel().run {
+            cognitiveClient.search("Description","apikey",bmp)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        it.run { description.run{ tags.map { it.compareTo("food") } } }
+                        contain = it.description.tags.isNotEmpty()
+                    },{
+                        Log.d("Tag" , "error")
+                    })
+        }
+        return contain
     }
 }
 
@@ -68,9 +65,11 @@ class CognitiveClientViewUI : AnkoComponent<CognitiveClientView>{
             button("search Photo"){
                 onClick {
                     doAsync {
-                        val contain = CognitiveClientModelView().onSearch()
-                        uiThread {
-                            toast(contain.toString())//True or False
+                        when{
+                            CognitiveClientView().onSearch()
+                            -> uiThread { toast("食べ物です")}
+                            else
+                            -> uiThread { toast("食べ物じゃないです") }
                         }
                     }
                 }
