@@ -10,5 +10,5 @@ import rx.Observable
  */
 interface CognitiveApi {
     @POST("analyze")
-    fun analyze(@Query("visualFeatures") visualFeatures: String, @Query("subscription-key") key: String, @Body requestBody: RequestBody) : Observable<Tag>
+    fun analyze( @Header("Ocp-Apim-Subscription-Key") apiKey: String, @Body image: RequestBody ) : Observable<Tag>
 }

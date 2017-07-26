@@ -36,12 +36,12 @@ class CognitiveClient {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build()
-        cognitiveApi = retrofit.create(CognitiveApi::class.java)!!
+        cognitiveApi = retrofit.create(CognitiveApi::class.java)
     }
 
     fun isFood(file: File): Observable<Boolean> {
         val fbody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        return cognitiveApi.analyze("Description/tags", Secrets.apiKey, fbody)
+        return cognitiveApi.analyze(Secrets.apiKey, fbody)
                 .map {
                     Log.d("Test", it.tags[0])
                     it.tags.map { it.compareTo("food") }
