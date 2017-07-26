@@ -10,5 +10,5 @@ import rx.Observable
 interface CognitiveClient {
     @Headers("Content-Type : multipart/from-data")
     @POST("analyze")
-    fun search(@Query("visualFeatures") visualFeatures: String, @Query("subscription-key=") key: String, @Part requestBody: Bitmap) : Observable<Article<Tag>>
+    fun search(@Query("visualFeatures") visualFeatures: String, @Query("subscription-key") key: String, @Part requestBody: Bitmap) : Observable<Tag>
 }

@@ -40,16 +40,16 @@ class CognitiveClientView : AppCompatActivity(){
         CognitiveClientViewUI().setContentView(this)
     }
     fun onSearch() : Boolean{
-        val resource : Resources = resources
-        val bmp : Bitmap = BitmapFactory.decodeResource(resource,R.drawable.bird)
+        val r : Resources = resources
+        val bmp : Bitmap = BitmapFactory.decodeResource(r,R.drawable.bird)
         var contain : Boolean = false
         CognitiveClientModel().run {
-            cognitiveClient.search("Description","apikey",bmp)
+            cognitiveClient.search("Description/tags","apikey",bmp)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        it.run { description.run{ tags.map { it.compareTo("food") } } }
-                        contain = it.description.tags.isNotEmpty()
+                        it.tags.map { it.compareTo("food") }
+                        contain = it.tags.isNotEmpty()
                     },{
                         Log.d("Tag" , "error")
                     })
