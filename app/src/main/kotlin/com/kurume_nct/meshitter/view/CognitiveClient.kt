@@ -8,7 +8,8 @@ import rx.Observable
  * Created by hanah on 7/25/2017.
  */
 interface CognitiveClient {
-    @Headers("Content-Type : multipart/from-data")
+    @Headers("Content-Type: multipart/from-data")
     @POST("analyze")
-    fun search(@Query("visualFeatures") visualFeatures: String, @Query("subscription-key") key: String, @Part requestBody: Bitmap) : Observable<Tag>
+    @Multipart
+    fun search(@Query("visualFeatures") visualFeatures: String, @Query("subscription-key") key: String, @Part("image") requestBody: Bitmap) : Observable<Tag>
 }
