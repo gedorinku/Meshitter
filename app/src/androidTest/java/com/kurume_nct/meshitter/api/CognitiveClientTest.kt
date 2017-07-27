@@ -17,8 +17,9 @@ import java.io.File
 class CognitiveClientTest {
     @Test
     fun isFood() {
+        val inputStream = javaClass.classLoader.getResourceAsStream("hunachi.jpg")
         val observer = TestObserver<Boolean>()
-        CognitiveClient().isFood("hunachi.jpg").toObservable().subscribe(observer)
+        CognitiveClient().isFood(inputStream).toObservable().subscribe(observer)
         observer.await()
         observer.assertNoErrors()
     }
