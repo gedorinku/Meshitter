@@ -20,8 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.PostActivity" />
-        <activity android:name=".api.TestCognitiveActivity" >
-        </activity>
     </application>
 
 </manifest>
