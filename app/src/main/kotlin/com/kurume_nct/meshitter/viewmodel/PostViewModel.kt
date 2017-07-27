@@ -6,8 +6,10 @@ import android.content.Intent
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import com.kurume_nct.meshitter.BR
+import com.kurume_nct.meshitter.api.CognitiveClient
 import com.kurume_nct.meshitter.toMediaPath
 import com.kurume_nct.meshitter.twitter.TwitterUtil
 import io.reactivex.Single

@@ -1,5 +1,6 @@
 package com.kurume_nct.meshitter.twitter
 
+import com.kurume_nct.meshitter.Secrets
 import io.reactivex.Single
 import twitter4j.Paging
 import twitter4j.Twitter

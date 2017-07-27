@@ -1,15 +1,12 @@
 package com.kurume_nct.meshitter.api
 
 
-import android.os.Environment
 import android.util.Log
-import com.kurume_nct.meshitter.twitter.Secrets
+import com.kurume_nct.meshitter.Secrets
 import com.microsoft.projectoxford.vision.VisionServiceClient
 import com.microsoft.projectoxford.vision.VisionServiceRestClient
-import io.reactivex.Observable
 import io.reactivex.Single
 import java.io.*
-import java.net.URI
 
 
 /**
