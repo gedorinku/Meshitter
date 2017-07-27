@@ -66,16 +66,8 @@ class PostViewModel(private val callback: Callback, private val context: Context
         val uri = data?.data ?: return
         imageUris.add(uri)
 
-        //"I'll select whether to attack....huhhuhuhhu."
-        /*imageUris.map {
-            val inputStream = context.contentResolver.openInputStream(it)
-            CognitiveClient().isFood(inputStream)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({if(it)isMeshiTerro = true},{ Log.d("imageUris", "error")})
-        }*/
-
         if (!isMeshiTerro) {
+            isMeshiTerro
             addMeshiTerroTargets()
         }
     }
