@@ -1,2 +1,2 @@
 /build
-Secrets.kt
+src/main/kotlin/com/kurume_nct/meshitter/Secrets.kt

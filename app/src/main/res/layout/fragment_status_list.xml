@@ -8,16 +8,36 @@
             type="com.kurume_nct.meshitter.viewmodel.StatusesViewModel" />
     </data>
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list"
-        android:name="com.kurume_nct.meshitter.view.StatusesFragment"
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="com.kurume_nct.meshitter.view.StatusesFragment"
-        tools:listitem="@layout/fragment_status" />
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.kurume_nct.meshitter.view.StatusesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="com.kurume_nct.meshitter.view.StatusesFragment"
+            tools:listitem="@layout/fragment_status" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/flaoting_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{viewModel.onFloatingButtonClick}"
+            android:src="@mipmap/ic_launcher"
+            app:layout_anchor="@id/list"
+            app:layout_anchorGravity="bottom|right|end" />
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

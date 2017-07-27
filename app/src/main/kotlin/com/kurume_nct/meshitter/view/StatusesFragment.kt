@@ -21,13 +21,13 @@ class StatusesFragment : Fragment(), StatusesViewModel.Callback, StatusViewModel
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_status_list, container, false)
-        val recyclerView = view.findViewById(R.id.list)
+        val recyclerView = view.findViewById(R.id.coordinator_layout).findViewById(R.id.list)
 
         // Set the adapter
         if (recyclerView is RecyclerView) {
             val context = recyclerView.context
             binding = DataBindingUtil.bind(view)
-            binding.viewModel = StatusesViewModel(this)
+            binding.viewModel = StatusesViewModel(this, context)
             recyclerView.layoutManager = LinearLayoutManager(context)
             adapter = MyStatusRecyclerViewAdapter(this, binding.viewModel.statusList)
             recyclerView.adapter = adapter

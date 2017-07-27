@@ -1,7 +1,11 @@
 package com.kurume_nct.meshitter.viewmodel
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.kurume_nct.meshitter.twitter.TwitterUtil
+import com.kurume_nct.meshitter.view.PostActivity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -11,7 +15,7 @@ import twitter4j.Status
 /**
  * Created by gedorinku on 2017/07/27.
  */
-class StatusesViewModel(private val callback: Callback) {
+class StatusesViewModel(private val callback: Callback, private val context: Context) {
 
     private val statuses: MutableList<Status> = mutableListOf()
 
@@ -31,8 +35,15 @@ class StatusesViewModel(private val callback: Callback) {
         }
     }
 
+    fun onFloatingButtonClick(view: View) {
+        val intent = Intent(context, PostActivity::class.java)
+        callback.startActivity(intent)
+    }
+
     interface Callback {
 
         fun onItemRangeInserted(positionStart: Int, itemCount: Int)
+
+        fun startActivity(intent: Intent)
     }
 }
