@@ -7,22 +7,23 @@ import com.kurume_nct.meshitter.R
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import org.jetbrains.anko.*
 import android.widget.Button
 import com.kurume_nct.meshitter.view.Secrets
+import com.microsoft.projectoxford.vision.VisionServiceClient
+import com.microsoft.projectoxford.vision.VisionServiceRestClient
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import rx.Observable
-import java.io.File
+import java.io.*
 
 
 /**
  * Created by hanah on 7/25/2017.
  */
+
 class CognitiveClient {
 
     val cognitiveApi: CognitiveApi
@@ -39,15 +40,31 @@ class CognitiveClient {
         cognitiveApi = retrofit.create(CognitiveApi::class.java)
     }
 
-    fun isFood(file: File): Observable<Boolean> {
-        val fbody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        return cognitiveApi.analyze(Secrets.apiKey, fbody)
+    fun isFood(file: File): Boolean {
+
+        val SubscriptionKey: String = "0123456789abcdef0123456789abcdef";
+        val client: VisionServiceClient = VisionServiceRestClient("key")
+        val inputStream: InputStream = FileInputStream(file)
+        val feature = arrayOf("food")
+        val detail = arrayOf("")
+
+        //val fbody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+
+        //非同期にする
+        val result = client.analyzeImage(inputStream, feature, detail).tags
+                .map {
+                    it.name.compareTo("food")
+                }
+
+        return result.isNotEmpty()
+
+        /*return cognitiveApi.analyze(Secrets.apiKey, fbody)
                 .map {
                     Log.d("Test", it.tags[0])
                     it.tags.map { it.compareTo("food") }
                     Log.d("Tag ", "pass")
                     it.tags.isNotEmpty()
-                }
+                }*/
     }
 }
 
