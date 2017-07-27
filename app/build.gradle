@@ -36,6 +36,7 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:25.3.1'
     kapt 'com.android.databinding:compiler:2.3.3'
     compile 'org.twitter4j:twitter4j-core:4.0.6'
     testCompile 'junit:junit:4.12'

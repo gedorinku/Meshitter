@@ -17,7 +17,6 @@ fun Uri.toMediaPath(context: Context): String {
     val selection = "_id=?"
     val selectionArgs = arrayOf(id.split(":")[1])
 
-
     return context.contentResolver
             .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, arrayOf(MediaStore.MediaColumns.DATA), selection, selectionArgs, null)
             ?.use {
