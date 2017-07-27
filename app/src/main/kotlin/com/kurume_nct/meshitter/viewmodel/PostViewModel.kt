@@ -67,7 +67,7 @@ class PostViewModel(private val callback: Callback, private val context: Context
         imageUris.add(uri)
 
         if (!isMeshiTerro) {
-            isMeshiTerro
+            isMeshiTerro = true
             addMeshiTerroTargets()
         }
     }
