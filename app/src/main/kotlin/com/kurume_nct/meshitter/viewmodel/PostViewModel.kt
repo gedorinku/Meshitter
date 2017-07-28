@@ -73,16 +73,20 @@ class PostViewModel(private val callback: Callback, private val context: Context
             CognitiveClient().isFood(inputStream)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({if(it)MeshiTerroShitasu = true},{ Log.d("imageUris", "error")})
+                    .subscribe({if (!isMeshiTerro && it) {
+                        isMeshiTerro = true
+                        addMeshiTerroTargets()
+                    }},{ Log.d("imageUris", "error")})
         }
 
-        if (!isMeshiTerro && MeshiTerroShitasu) {
+        /*if (!isMeshiTerro && MeshiTerroShitasu) {
             isMeshiTerro = true
             addMeshiTerroTargets()
-        }
+        }*/
     }
 
     private fun addMeshiTerroTargets() {
+        Log.d("Meshitaro","surutumoridesu")
         TwitterUtil.nextMeshiTerroTargetsScreenNames()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
