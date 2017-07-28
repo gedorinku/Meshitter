@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -11,15 +12,43 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <EditText
             android:id="@+id/edit_text"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="241dp"
             android:gravity="top"
             android:hint="@string/whats_happening"
-            android:text="@={viewModel.tweetBody}" />
+            android:text="@={viewModel.tweetBody}"
+            android:layout_weight="0.40" />
+
+        <LinearLayout
+            android:id="@+id/list_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="176dp"
+            android:orientation="vertical" >
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/linearlayout_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <ListView
+                        android:id="@+id/picture_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                    </ListView>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
