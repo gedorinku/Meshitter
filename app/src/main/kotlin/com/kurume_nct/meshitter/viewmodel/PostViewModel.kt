@@ -25,7 +25,6 @@ class PostViewModel(private val callback: Callback, private val context: Context
 
     val REQUEST_CODE = 334
     var isMeshiTerro = false
-    var MeshiTerroShitasu = false
 
     @Bindable
     var tweetBody: String = ""
@@ -79,10 +78,6 @@ class PostViewModel(private val callback: Callback, private val context: Context
                     }},{ Log.d("imageUris", "error")})
         }
 
-        /*if (!isMeshiTerro && MeshiTerroShitasu) {
-            isMeshiTerro = true
-            addMeshiTerroTargets()
-        }*/
     }
 
     private fun addMeshiTerroTargets() {
