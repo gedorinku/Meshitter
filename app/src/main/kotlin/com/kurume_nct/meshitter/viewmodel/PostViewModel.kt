@@ -8,7 +8,9 @@ import android.databinding.Bindable
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.ListView
 import com.kurume_nct.meshitter.BR
+import com.kurume_nct.meshitter.R
 import com.kurume_nct.meshitter.api.CognitiveClient
 import com.kurume_nct.meshitter.toMediaPath
 import com.kurume_nct.meshitter.twitter.TwitterUtil
@@ -34,7 +36,15 @@ class PostViewModel(private val callback: Callback, private val context: Context
             notifyPropertyChanged(BR.tweetBody)
         }
 
+
     var imageUris: MutableList<Uri> = mutableListOf()
+
+    fun listSetting(){
+        val listAdapter = PictureListAdapter(context)
+        listAdapter.picture = imageUris
+        val listView : ListView = findViewById(R.id.picture_list)
+        listView.adapter = listAdapter
+    }
 
     fun onClickTweetButton(view: View) {
         Single.fromCallable {
